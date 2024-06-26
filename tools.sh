@@ -6,4 +6,4 @@ if [ $(id -u) -ne 0 ]; then
   exit 1
 fi
 apt-get update -y
-apt-get install git build-essential python3-pip -y
+apt-get install -y git build-essential python3-pip cmake silversearcher-ag clangd clang-format

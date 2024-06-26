@@ -28,6 +28,7 @@ if [ -e "$BASH_PATH" ]; then
         echo "The file $BASH_PATH is not a symbolic link. Replacing it..."
 	mv $HOME/.bashrc $HOME/.bashrc.backup
 	ln -s dotfiles/.bashrc $HOME/.bashrc
+	source ~/.bashrc
         echo "File $BASH_PATH has been replaced."
     fi
 else
@@ -35,7 +36,7 @@ else
 fi
 
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install
+~/.fzf/install --key-bindings --completion --update-rc
 
 if [ -e "$VIM_PATH" ]; then
     # Check if the file is a symbolic link
@@ -46,6 +47,7 @@ if [ -e "$VIM_PATH" ]; then
 	rm -rf "$VIM_PATH.backup"
 	mv -f $VIM_PATH "$VIM_PATH.backup"
         echo "File $VIM_PATH has been backed up."
+        cp -r vimrc "$VIM_PATH"
     fi
 else
     echo "The file $VIM_PATH does not exist. Will create one now..."
@@ -54,8 +56,10 @@ fi
 
 
 vim +'PlugInstall --sync' +qa
-
+python3 $VIM_PATH/plugged/YouCompleteMe/install.py --clangd-completer
 source ~/.bashrc
 echo "File $BASH_PATH has been sourced."
+echo "All setup completed succesfully!"
+
 
 popd
