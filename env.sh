@@ -27,14 +27,17 @@ if [ -e "$BASH_PATH" ]; then
     else
         echo "The file $BASH_PATH is not a symbolic link. Replacing it..."
 	mv $HOME/.bashrc $HOME/.bashrc.backup
-	ln -s dotfiles/.bashrc $HOME/.bashrc
+	echo "current directory is $(pwd)"
+	ln -sr dotfiles/.bashrc $HOME/.bashrc
 	source ~/.bashrc
         echo "File $BASH_PATH has been replaced."
     fi
 else
-    echo "The file $BASH_PATH does not exist."
+    echo "The file $BASH_PATH does not exist. Created one."
+    ln -sr dotfiles/.bashrc $HOME/.bashrc
 fi
 
+source "Install fzf..."
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install --key-bindings --completion --update-rc
 
@@ -55,10 +58,17 @@ else
 fi
 
 
+echo "Install vim pluggins..."
 vim +'PlugInstall --sync' +qa
+echo "Install YouCompleteMe clangd completer"
 python3 $VIM_PATH/plugged/YouCompleteMe/install.py --clangd-completer
-source ~/.bashrc
+
 echo "File $BASH_PATH has been sourced."
+source "$BASH_PATH"
+
+echo "Install openai api"
+pip install openai
+
 echo "All setup completed succesfully!"
 
 
