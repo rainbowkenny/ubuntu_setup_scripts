@@ -21,20 +21,9 @@ git clone git@github.com:rainbowkenny/dotfiles.git
 
 
 if [ -e "$BASH_PATH" ]; then
-    # Check if the file is a symbolic link
-    if [ -L "$BASH_PATH" ]; then
-        echo "The file $BASH_PATH is a symbolic link. It will not be replaced."
-    else
-        echo "The file $BASH_PATH is not a symbolic link. Replacing it..."
-	mv $HOME/.bashrc $HOME/.bashrc.backup
-	echo "current directory is $(pwd)"
-	ln -sr dotfiles/.bashrc $HOME/.bashrc
-	source ~/.bashrc
-        echo "File $BASH_PATH has been replaced."
-    fi
+    cat dotfiles/keymappings.sh >> $HOME/.bashrc
 else
-    echo "The file $BASH_PATH does not exist. Created one."
-    ln -sr dotfiles/.bashrc $HOME/.bashrc
+    echo "The file $BASH_PATH does not exist."
 fi
 
 source "Install fzf..."
