@@ -8,4 +8,4 @@ fi
 apt-get update -y
 apt-get install -y git build-essential python3-pip python3-venv cmake \
 silversearcher-ag clangd clang-format tree \
-minicom \
+minicom gitk \
