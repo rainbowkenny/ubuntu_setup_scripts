@@ -5,6 +5,7 @@ pushd $HOME
 SCRIPT_DIR="setup_scripts"
 BASH_PATH="$HOME/.bashrc"
 VIM_PATH="$HOME/.vim"
+GDB_PATH="$HOME/.gdbinit"
 
 
 if [ -d "$SCRIPT_DIR" ]; then
@@ -25,6 +26,9 @@ if [ -e "$BASH_PATH" ]; then
 else
     echo "The file $BASH_PATH does not exist."
 fi
+
+echo "Copy over .gdbinit"
+cp dotfiles/.gdbinit $HOME/.gdbinit
 
 source "Install fzf..."
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
